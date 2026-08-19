@@ -22,7 +22,7 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        "https://YOUR-BACKEND-URL.onrender.com/api/auth/signup",
+        "https://zerodha-clone-1-tb9p.onrender.com/api/auth/signup",
         formData
       );
 
