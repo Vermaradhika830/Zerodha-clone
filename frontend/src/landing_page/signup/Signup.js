@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,13 +30,20 @@ function Signup() {
       );
 
       setMessage(response.data.message || "Signup successful!");
+
       setFormData({
         name: "",
         email: "",
         password: "",
       });
+
+      // Signup ke baad Login page par jayega
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
     } catch (error) {
-      console.error(error);
+      console.error("Signup error:", error);
+
       setMessage(
         error.response?.data?.message || "Signup failed. Please try again."
       );
@@ -64,14 +74,20 @@ function Signup() {
         <h1
           style={{
             textAlign: "center",
-            marginBottom: "10px",
             color: "#387ed1",
+            marginBottom: "10px",
           }}
         >
           Create Account
         </h1>
 
-        <p style={{ textAlign: "center", color: "#666" }}>
+        <p
+          style={{
+            textAlign: "center",
+            color: "#666",
+            marginBottom: "25px",
+          }}
+        >
           Open your Zerodha account
         </p>
 
@@ -116,7 +132,9 @@ function Signup() {
             style={{
               textAlign: "center",
               marginTop: "20px",
-              color: "#387ed1",
+              color: message.toLowerCase().includes("failed")
+                ? "red"
+                : "#387ed1",
             }}
           >
             {message}
